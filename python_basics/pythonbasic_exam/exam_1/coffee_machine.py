@@ -35,7 +35,7 @@ if type_drink == 'Tea':
     elif sugar == 'Normal':
         tea = 0.6 * qty_drinks
     elif sugar == 'Extra':
-       tea = 0.7 * qty_drinks
+        tea = 0.7 * qty_drinks
 total = espresso + cappuccino + tea
 if total > 15:
     total *= 0.8

@@ -1,0 +1,7 @@
+string = input()
+lower_case_string = string.lower()
+count_sand = lower_case_string.count('sand')
+count_water = lower_case_string.count('water')
+count_fish = lower_case_string.count('fish')
+count_sun = lower_case_string.count('sun')
+print(count_sun + count_fish + count_water + count_sand)
