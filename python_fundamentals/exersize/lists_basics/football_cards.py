@@ -1,5 +1,5 @@
-team_a = ['A-' + str(s) for s in range(1,12)]   # number of football players
-team_b = ['B-' + str(s) for s in range(1,12)]   # number of football players
+team_a = ['A-' + str(s) for s in range(1 , 12)]   # number of football players
+team_b = ['B-' + str(s) for s in range(1 , 12)]   # number of football players
 players = input().split()
 game_was_terminated = False
 for player in players:
