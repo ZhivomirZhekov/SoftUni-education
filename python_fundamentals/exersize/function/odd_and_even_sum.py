@@ -1,7 +1,5 @@
-from typing import Tuple
 
-
-def even_odd_sums(some_number : str) -> tuple[int , int]:
+def even_odd_sums(some_number : str) -> int and int:
     sum_of_even = 0
     sum_of_odd = 0
     for digit in some_number:
