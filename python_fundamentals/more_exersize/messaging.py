@@ -30,5 +30,5 @@ for numbers in sequence_of_numbers:
     while char_index >= len(some_string):
         char_index -= len(some_string)
     message += some_string[char_index]
-    some_string = some_string[:char_index] + some_string[char_index +1:]
+    some_string = some_string[:char_index] + some_string[char_index + 1:]
 print(message)
