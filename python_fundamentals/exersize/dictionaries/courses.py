@@ -5,7 +5,7 @@ while True:
     if command == "end":
         break
     course_name , student_name = command.split(' : ')
-    if course_name not in course_dict:
+    if course_name not in course_dict.keys():
         course_dict[course_name] = []
     course_dict[course_name].append(student_name)
 

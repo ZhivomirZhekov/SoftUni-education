@@ -3,7 +3,7 @@ student_grades_dict = {}
 for count in range(student_grade_counts):
     student = input()
     grade = float(input())
-    if student not in student_grades_dict:
+    if student not in student_grades_dict.keys():
         student_grades_dict[student] = []
     student_grades_dict[student].append(grade)
 

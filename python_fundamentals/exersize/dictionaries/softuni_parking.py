@@ -19,14 +19,14 @@ for number in range(number_of_commands):
     if "register" == command[0]:
         user_name = command[1]
         license_plate = command[2]
-        if user_name in parking_lot_dict:
+        if user_name in parking_lot_dict.keys():
             print(f"ERROR: already registered with plate number {license_plate}")
         else:
             parking_lot_dict[user_name] = license_plate
             print(f"{user_name} registered {license_plate} successfully")
     if "unregister" == command[0]:
         user_name = command[1]
-        if user_name not in parking_lot_dict:
+        if user_name not in parking_lot_dict.keys():
             print(f"ERROR: user {user_name} not found")
         else:
             del parking_lot_dict[user_name]
