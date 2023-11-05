@@ -154,13 +154,13 @@ class Expression:
 
     def resize(self, width, height, x, y):
         self.frame.resize(width, height)
-        self.frame.move(x, y)
+        self.frame.move(x , y)
 
         self.state.resize(int(width * 0.1), int(height * 0.7))
         self.state.move(int(width * 0.02), int(height * 0.15))
 
         self.equal_label.resize(int(width * 0.04), int(height * 0.7))
-        self.equal_label.move(int(width * 0.13), int(height * 0.15))
+        self.equal_label.move(int(width * 0.13) , int(height * 0.15))
 
         if self.negate:
             self.first_bracket.resize(int(width * 0.04), int(height * 0.7))
