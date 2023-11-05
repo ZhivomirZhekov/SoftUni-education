@@ -69,8 +69,8 @@ def add(dictionary: dict , new_piece , new_composer , new_key):
         if exist_pieces == new_piece:
             print(f"{new_piece} is already in the collection!")
             return dictionary
-    if new_piece not in dictionary.keys():
-        dictionary[new_piece] = {}
+
+    dictionary[new_piece] = {}
     dictionary[new_piece][new_composer] = new_key
     print(f"{new_piece} by {new_composer} in {new_key} added to the collection!")
     return dictionary
