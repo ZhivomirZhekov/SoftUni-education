@@ -3,7 +3,7 @@ import re
 string = input()
 valid_locations = []
 travel_points = 0
-pattern = r'(=|\/)([A-Z][A-Za-z]{3,})\1'
+pattern = r'(=|\/)([A-Z][A-Za-z]{2,})\1'
 matches = re.findall(pattern , string)
 if matches:
     for match in matches:
@@ -12,4 +12,3 @@ if matches:
         travel_points += len(location)
 print(f"Destinations: {', '.join(valid_locations)}")
 print(f"Travel Points: {travel_points}")
-
