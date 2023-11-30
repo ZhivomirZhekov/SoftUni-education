@@ -1,11 +1,11 @@
 def add_stop(travel_stops , index , string):
-    if 0 < index < len(travel_stops):
+    if 0 <= index < len(travel_stops):
         travel_stops = travel_stops[:index] + string + travel_stops[index:]
     return travel_stops
 
 
 def remove_stop(travel_stops , start_index , end_index):
-    if 0 < start_index < len(travel_stops) and 0 < end_index < len(travel_stops):
+    if 0 <= start_index < len(travel_stops) and 0 <= end_index < len(travel_stops):
         string_to_remove = travel_stops[start_index:end_index + 1]
         travel_stops = travel_stops.replace(string_to_remove , "")
     return travel_stops
