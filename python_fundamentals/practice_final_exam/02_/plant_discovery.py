@@ -1,57 +1,61 @@
-def rate(self_rarity: dict , self_rating: dict , plant: str , rating: int):
-    if plant not in self_rarity.keys():
-        print("error")
-        return self_rating
-    if plant not in self_rating:
-        self_rating[plant] = []
-    self_rating[plant].append(rating)
-    return self_rating
-
-
-def update(self: dict , plant: str , rarity: int):
-    if plant not in self:
-        print("error")
-        return self
-    self[plant] = rarity
-    return self
-
-
-def reset(self: dict , plant: str):
-    if plant not in self:
-        print("error")
-        return self
-    del self[plant]
-    return self
-
-
-number = int(input())
-plant_rarity_dict = {}
-plant_rating_dict = {}
-for i in range(number):
-    plant , rarity = input().split("<->")
-    rarity = int(rarity)
-    plant_rarity_dict[plant] = rarity
-
-while True:
-    command = input().split(": ")
-    if command[0] == "Exhibition":
-        break
-    if command[0] == "Rate":
-        plant , rating = command[1].split(" - ")
-        rating = int(rating)
-        plant_rating_dict = rate(plant_rarity_dict , plant_rating_dict , plant , rating)
-    elif command[0] == "Update":
-        plant , new_rarity = command[1].split(" - ")
-        new_rarity = int(new_rarity)
-        plant_rarity_dict = update(plant_rarity_dict , plant , new_rarity)
-    elif command[0] == "Reset":
-        plant = command[1]
-        plant_rating_dict = reset(plant_rating_dict , plant)
-
-print("Plants for the exhibition:")
-for plant , rarity in plant_rarity_dict.items():
-    if plant in plant_rating_dict:
-        average_rating = sum(plant_rating_dict[plant]) / len(plant_rating_dict[plant])
+def rate(plant_rarity: dict , plant_rating: dict , plant: str , rating: int):
+    if plant in plant_rarity.keys():
+        if plant not in plant_rating.keys():
+            plant_rating[plant] = []
+        plant_rating[plant].append(rating)
     else:
-        average_rating = 0
-    print(f"- {plant}; Rarity: {rarity}; Rating: {average_rating:.2f}")
+        print("error")
+    return plant_rating
+
+
+def update(plant_rarity: dict , plant: str , new_rarity: int):
+    if plant in plant_rarity.keys():
+        plant_rarity[plant] = new_rarity
+    else:
+        print("error")
+    return plant_rarity
+
+
+def reset(plant_rating , plant):
+    if plant in plant_rating.keys():
+        del plant_rating[plant]
+    else:
+        print("error")
+    return plant_rating
+
+
+def main_function():
+    number_of_plants = int(input())
+    plant_rarity = {}
+    plant_rating = {}
+    for number in range(number_of_plants):
+        plant , rarity = input().split("<->")
+        plant_rarity[plant] = int(rarity)
+
+    while True:
+        command = input().split(": ")
+        action = command[0]
+        if action == "Exhibition":
+            break
+
+        if action == "Rate":
+            plant , rating = command[1].split(" - ")
+            rating = int(rating)
+            plant_rating = rate(plant_rarity , plant_rating , plant , rating)
+        elif action == "Update":
+            plant , new_rarity = command[1].split(" - ")
+            new_rarity = int(new_rarity)
+            plant_rarity = update(plant_rarity , plant , new_rarity)
+        elif action == "Reset":
+            plant = command[1]
+            plant_rating = reset(plant_rating , plant)
+    print("Plants for the exhibition:")
+    for plant , rarity in plant_rarity.items():
+        if plant in plant_rating.keys():
+            average_rating = sum(plant_rating[plant]) / len(plant_rating[plant])
+        else:
+            average_rating = 0
+        print(f"- {plant}; Rarity: {rarity}; Rating: {average_rating:.2f}")
+
+
+main_function()
