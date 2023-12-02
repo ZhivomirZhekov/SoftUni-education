@@ -1,78 +1,84 @@
-def hero_creation(name , hp , mp):
-    return {'name': name , 'hp': hp , 'mp': mp}
+def cast_spell(heroes , hero_name , mp_need , spell_name):
+    if hero_name in heroes.keys():
+        if heroes[hero_name]['mp'] >= mp_need:
+            heroes[hero_name]['mp'] -= mp_need
+            print(f"{hero_name} has successfully cast {spell_name} and now has {heroes[hero_name]['mp']} MP!")
+        else:
+            print(f"{hero_name} does not have enough MP to cast {spell_name}!")
+    return heroes
 
 
-def spell_cast(hero , mp , spell):
-    if hero['mp'] >= mp:
-        hero['mp'] -= mp
-        print(f"{hero['name']} has successfully cast {spell} and now has {hero['mp']} MP!")
-    else:
-        print(f"{hero['name']} does not have enough MP to cast {spell}!")
+def take_damage(heroes , hero_name , damage , attacker):
+    if hero_name in heroes.keys():
+        heroes[hero_name]['hp'] -= damage
+        if heroes[hero_name]['hp'] > 0:
+            print(f"{hero_name} was hit for {damage} HP by {attacker} and now has {heroes[hero_name]['hp']} HP left!")
+        else:
+            print(f"{hero_name} has been killed by {attacker}!")
+            del heroes[hero_name]
+    return heroes
 
 
-def take_damage(hero , damage_taken , attacker_name):
-    hero['hp'] -= damage_taken
-    if hero['hp'] > 0:
-        print(f"{hero['name']} was hit for {damage_taken} HP by {attacker_name} and now has {hero['hp']} HP left!")
-        return False
-    else:
-        print(f"{hero['name']} has been killed by {attacker_name}!")
-        return True
+def recharge(heroes , hero_name , amount , max_mp):
+    if hero_name in heroes.keys():
+        before_recharge = heroes[hero_name]['mp']
+        heroes[hero_name]['mp'] = min(max_mp , before_recharge + amount)
+        recharged = heroes[hero_name]['mp'] - before_recharge
+        print(f"{hero_name} recharged for {recharged} MP!")
+    return heroes
 
 
-def recharge(hero , max_mp , mp_recharge):
-    mp_to_recharge = min(mp_recharge , max_mp - hero['mp'])
-    hero['mp'] += mp_to_recharge
-    print(f"{hero['name']} recharged for {mp_to_recharge} MP!")
+def heal(heroes , hero_name , amount , max_hp):
+    if hero_name in heroes.keys():
+        before_heal = heroes[hero_name]['hp']
+        heroes[hero_name]['hp'] = min(max_hp , before_heal + amount)
+        healed = heroes[hero_name]['hp'] - before_heal
+        print(f"{hero_name} healed for {healed} HP!")
+    return heroes
 
 
-def heal(hero , max_hp , hp_heal):
-    hp_healed = min(hp_heal , max_hp - hero['hp'])
-    hero['hp'] += hp_healed
-    print(f"{hero['name']} healed for {hp_healed} HP!")
-
-
-def main_function():
+def main_funtion():
     number_of_heroes = int(input())
-    heroes = []
-    for number in range(number_of_heroes):
-        hero_attributes = input().split()
-        hero_name = hero_attributes[0]
-        hero_hp = int(hero_attributes[1])
-        hero_mp = int(hero_attributes[2])
-        hero = hero_creation(hero_name , hero_hp , hero_mp)
-        heroes.append(hero)
+    heroes = {}
+    for _ in range(number_of_heroes):
+        hero = input().split(" ")
+        hero_name , hp , mp = hero[0] , int(hero[1]) , int(hero[2])
+        if hero_name not in heroes.keys():
+            heroes[hero_name] = {}
+        heroes[hero_name]['hp'] = hp
+        heroes[hero_name]['mp'] = mp
 
     max_hp = 100
     max_mp = 200
-
     while True:
-        command = input()
-        if command == "End":
+        command = input().split(" - ")
+        action = command[0]
+        if action == "End":
             break
 
-        action_to_perform = command.split(' - ')
-        action = action_to_perform[0]
-        hero_name = action_to_perform[1]
-        for hero in heroes:
-            if hero['name'] == hero_name:
-                if action == 'CastSpell':
-                    required_mp = int(action_to_perform[2])
-                    spell_name = action_to_perform[3]
-                    spell_cast(hero , required_mp , spell_name)
-                elif action == 'TakeDamage':
-                    damage_taken = int(action_to_perform[2])
-                    attacker_name = action_to_perform[3]
-                    if take_damage(hero , damage_taken , attacker_name):
-                        heroes.remove(hero)
-                elif action == 'Recharge':
-                    mp_recharge = int(action_to_perform[2])
-                    recharge(hero , max_mp , mp_recharge)
-                elif action == 'Heal':
-                    hp_heal = int(action_to_perform[2])
-                    heal(hero , max_hp , hp_heal)
-    for hero in heroes:
-        print(f"{hero['name']}\n  HP: {hero['hp']}\n  MP: {hero['mp']}")
+        if action == "CastSpell":
+            hero_name = command[1]
+            mp_need = int(command[2])
+            spell_name = command[3]
+            heroes = cast_spell(heroes , hero_name , mp_need , spell_name)
+        elif action == "TakeDamage":
+            hero_name = command[1]
+            damage = int(command[2])
+            attacker = command[3]
+            heroes = take_damage(heroes , hero_name , damage , attacker)
+        elif action == "Recharge":
+            hero_name = command[1]
+            amount = int(command[2])
+            heroes = recharge(heroes , hero_name , amount , max_mp)
+        elif action == "Heal":
+            hero_name = command[1]
+            amount = int(command[2])
+            heroes = heal(heroes , hero_name , amount , max_hp)
+
+    for hero , attributes in heroes.items():
+        hp = attributes['hp']
+        mp = attributes['mp']
+        print(f"{hero}\n  HP: {hp}\n  MP: {mp}")
 
 
-main_function()
+main_funtion()
